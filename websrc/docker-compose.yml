@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - ALLOWED_HOSTS=iteach-cloudedit.xdf.cn,iteachcdn.xdf.cn
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
