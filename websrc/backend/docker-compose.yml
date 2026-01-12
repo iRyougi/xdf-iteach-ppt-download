@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  json2pdf:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: json2pdf
+    ports:
+      - "8000:8000"
+    environment:
+      # 可通过环境变量覆盖默认配置
+      - MAX_TASKS=4
+      - DOWNLOAD_CONCURRENCY=20
+      - REQUEST_TIMEOUT=30
+      - TOTAL_TIMEOUT=180
+    restart: unless-stopped
+    # 资源限制（可选）
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+    # 日志配置
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
